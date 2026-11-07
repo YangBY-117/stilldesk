@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101411">
+  <meta name="description" content="Background-first tools for AI agents. Work with Chrome, Edge and native apps through MCP and CLI, while your cursor stays yours.">
+  <meta property="og:title" content="StillDesk — Your cursor stays yours.">
+  <meta property="og:description" content="Let agents work in your apps. Keep using your computer.">
+  <meta property="og:image" content="https://yangby-117.github.io/stilldesk/assets/stilldesk-brand.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>StillDesk — Your cursor stays yours.</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="site.css">
+  <script type="module" src="site.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="nav wrap">
+    <a class="wordmark" href="#"><img src="assets/mark.svg" width="30" height="30" alt="">stilldesk<span class="version">/ early access</span></a>
+    <nav aria-label="Main navigation"><a href="#how">How it works</a><a href="#apps">Apps</a><a href="#connect">Connect</a><a class="github" href="https://github.com/YangBY-117/stilldesk">GitHub <span aria-hidden="true">↗</span></a></nav>
+  </header>
+  <main id="main">
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> BACKGROUND-FIRST AGENT TOOLS</div>
+        <h1>Your agent works.<br>Your cursor<br><em>stays yours.</em></h1>
+        <p class="lede">Give your agent access to your apps.<br>Keep your screen, your mouse, and your flow.</p>
+        <div class="hero-actions"><a class="button primary" href="#connect">Get started <span>↗</span></a><a class="button text" href="https://github.com/YangBY-117/stilldesk">Explore the code <span>→</span></a></div>
+        <div class="hero-notes"><span>Open source</span><span>Local first</span><span>MCP + CLI</span></div>
+      </div>
+      <div class="hero-visual"><img src="assets/stilldesk-brand.png" width="1672" height="941" fetchpriority="high" alt="A stationary ivory cursor beside softly lit glass panels, illustrating quiet background work"><div class="image-caption">MORE DONE. LESS TAKEN OVER.</div></div>
+    </section>
+    <div class="rule wrap"><span>THE DESKTOP IS STILL YOURS.</span><span class="mono">human → foreground &nbsp; / &nbsp; agent → background</span></div>
+    <section class="demo-section wrap" id="how">
+      <div class="section-top"><div><div class="eyebrow">01 / THE DIFFERENCE</div><h2>Two workflows.<br>One peaceful desktop.</h2></div><p>Traditional screen automation shares your input devices.<br>StillDesk talks to the app through a background interface.</p></div>
+      <div class="workbench">
+        <div class="human-pane"><div class="pane-bar"><span class="traffic"><i></i><i></i><i></i></span><span>your workspace</span><span class="status-dot">uninterrupted</span></div>
+          <div class="document"><span class="doc-date">MONDAY, YOUR PACE</span><h3>A little room<br>to think.</h3><p>The outline is almost ready.<br>One more sentence, then coffee.</p><div class="writing-line">You can keep writing<span class="caret"></span></div><div class="paper-lines"><i></i><i></i><i></i></div><span class="fixed-cursor" aria-hidden="true">➤</span><span class="cursor-label">your cursor, exactly where you left it</span></div>
+        </div>
+        <div class="agent-pane"><div class="pane-bar"><span class="mini-mark">≋</span><span>agent / background</span><span class="badge">MCP</span></div>
+          <div class="terminal" aria-live="polite"><div class="terminal-prompt"><span>❯</span> <span id="demo-prompt">Read a page and attach a report</span></div><ol id="demo-lines"></ol><div class="terminal-outcome" id="demo-outcome"></div></div>
+          <div class="demo-footer"><span>Illustrated workflow · app coverage below</span><button id="replay" type="button" aria-label="Replay the illustrated workflow">↻ Replay</button></div>
+        </div>
+      </div>
+      <div class="principles"><article><span class="number">01</span><h3>No pointer fights.</h3><p>App interfaces do the work. The tool never reaches for your physical mouse or global keyboard.</p></article><article><span class="number">02</span><h3>No debugging setup.</h3><p>The browser extension uses Native Messaging. No remote debugging port or debugger permission.</p></article><article><span class="number">03</span><h3>Clear about its limits.</h3><p>A missing background action returns a capability error. It never quietly switches to a foreground bot.</p></article></div>
+    </section>
+    <section class="apps-section" id="apps"><div class="wrap">
+      <div class="section-top"><div><div class="eyebrow">02 / THE TOOLBOX</div><h2>Your real apps.<br>A calmer way in.</h2></div><p>One entry point. Different native backends.<br>Capabilities are specific, and visible.</p></div>
+      <div class="apps-grid">
+        <article class="app"><div class="app-symbol browser-symbol">◉</div><div><h3>Chrome + Edge</h3><p>Read, navigate, fill forms, and transfer files through a browser extension.</p></div><a href="capabilities.html#browser">Browser capabilities <span>↗</span></a></article>
+        <article class="app"><div class="app-symbol wechat-symbol">▰</div><div><h3>WeChat</h3><p>Local history, search, images and verified cached attachments. Background-first reads.</p></div><a href="capabilities.html#wechat">Native writes: in progress <span>↗</span></a></article>
+        <article class="app"><div class="app-symbol qq-symbol">♟</div><div><h3>QQ</h3><p>Account-scoped local history and image access. Structured records with stable cursors.</p></div><a href="capabilities.html#qq">Local, read-only adapter <span>↗</span></a></article>
+        <article class="app"><div class="app-symbol feishu-symbol">⌁</div><div><h3>Feishu / Lark</h3><p>Official service operations through the authenticated Feishu CLI. No window automation.</p></div><a href="capabilities.html#feishu">Requires app authorization <span>↗</span></a></article>
+        <article class="app"><div class="app-symbol meeting-symbol">▣</div><div><h3>Tencent Meeting</h3><p>Background meeting records and local transcript workflows. Capture starts only on request.</p></div><a href="capabilities.html#meeting">Explore meeting backends <span>↗</span></a></article>
+        <article class="app app-manifesto"><div class="eyebrow">A SMALL CONTRACT</div><h3>When there is no<br>quiet path,<br>we say so.</h3><p>Native is a method.<br>Transparency is the promise.</p></article>
+      </div>
+    </div></section>
+    <section class="connect-section wrap" id="connect"><div class="section-top"><div><div class="eyebrow">03 / BRING YOUR AGENT</div><h2>Same tools.<br>Your choice of agent.</h2></div><p>Use the CLI, add an MCP server, or export a client configuration.<br>Each integration lists what has actually been checked.</p></div>
+      <div class="client-ribbon" aria-label="Configuration targets"><span>Codex</span><span>Claude Code*</span><span>Gemini CLI</span><span>Kimi Code</span><span>OpenClaw</span><span>Hermes</span><span>Cursor</span><span>ZCode</span><span>and more</span></div>
+      <div class="install-layout"><div class="install-copy"><span class="badge">START LOCAL</span><h3>A few commands.<br>No desktop takeover.</h3><p>Clone the repository, prepare the native bridge, then add the tools to your agent.</p><a href="getting-started.html" class="inline-link">Read the setup guide <span>→</span></a><p class="small">* Claude Code compatibility is checked statically; project tests do not launch Claude Code. Exported configuration is not a claim of live testing in every harness.</p></div>
+        <div class="codebox"><div class="code-tabs" role="tablist" aria-label="Installation examples"><button type="button" class="active" id="tab-cli" role="tab" aria-selected="true" aria-controls="install-code" data-code="cli">CLI</button><button type="button" id="tab-mcp" role="tab" aria-selected="false" aria-controls="install-code" data-code="mcp">MCP</button><button type="button" id="tab-config" role="tab" aria-selected="false" aria-controls="install-code" data-code="config">Agent config</button><button id="copy-code" type="button" aria-label="Copy the installation commands">Copy</button></div><pre id="install-code" role="tabpanel" aria-labelledby="tab-cli"><code></code></pre><div class="code-note">Node.js 22+ · Windows native adapters · no model API key required</div></div>
+      </div>
+    </section>
+    <section class="evidence-section wrap"><div><div class="eyebrow">BUILT TO BE INSPECTED</div><h2>Show the work.<br>State the boundaries.</h2></div><div class="evidence-links"><a href="capabilities.html">Capability matrix <span>↗</span></a><a href="https://github.com/YangBY-117/stilldesk/tree/main/tests">Reproducible checks <span>↗</span></a><a href="https://github.com/YangBY-117/stilldesk/blob/main/SECURITY.md">Security and local data <span>↗</span></a><a href="https://github.com/YangBY-117/stilldesk/blob/main/CONTRIBUTING.md">Build a native adapter <span>↗</span></a></div></section>
+    <section class="closing wrap"><img src="assets/mark.svg" width="48" height="48" alt=""><h2>Let the agent help.<br>Keep the desk.</h2><a class="button primary" href="https://github.com/YangBY-117/stilldesk">Build with StillDesk <span>↗</span></a></section>
+  </main>
+  <footer class="wrap"><a class="wordmark" href="#">stilldesk</a><p>Background-first. Open by design.</p><div><a href="https://github.com/YangBY-117/stilldesk">GitHub</a><a href="getting-started.html">Docs</a><a href="https://github.com/YangBY-117/stilldesk/blob/main/LICENSE">License</a></div></footer>
+</body>
+</html>

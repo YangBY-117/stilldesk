@@ -1,0 +1,3 @@
+[mcp_servers.stilldesk]
+command = "node"
+args = ["\\path\\to\\stilldesk\\bin\\stilldesk.mjs","mcp"]

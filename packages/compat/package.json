@@ -1,0 +1,8 @@
+{
+  "name": "@stilldesk/compat",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test tests/*.test.mjs", "examples": "node generate-examples.mjs" },
+  "engines": { "node": ">=22" }
+}

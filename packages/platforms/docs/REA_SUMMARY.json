@@ -1,0 +1,31 @@
+{
+  "scope": "Native executable identity and embedded Go build metadata only; not decompilation or proof of all runtime behavior",
+  "artifacts": [
+    {
+      "name": "lark-cli",
+      "version": "1.0.4",
+      "evidenceId": "ev_bf8f27f2e88db02e6845676b2fd5b673c5d184a651bb74ae52f339bd1aec007d",
+      "sha256": "c52346be756767eeb40921b648a5361b67229a6db6f2eedd218e8405c092e2e8",
+      "authority": "shipped-artifact",
+      "operation": "inspect_go_binary",
+      "limitations": [
+        "Embedded build metadata is observed file content, not proof of compiler identity, dependency authenticity or runtime behavior.",
+        "Only Go build information is inspected; function names, source mappings, type metadata and decompiled code are not recovered.",
+        "Resource guards bound stable artifact reads and cumulative header searches to 256 MiB each, aggregate embedded strings to 1 MiB, structural table decoding to 16 MiB and complete metadata payloads to 8 MiB; these are not operating-system memory or CPU limits."
+      ]
+    },
+    {
+      "name": "tmeet",
+      "version": "v1.0.19",
+      "evidenceId": "ev_e6587318d21c5946e0edb75ecd6ca811dd72159a4281fe436f1bf3f413d3d99f",
+      "sha256": "a9dd7d48ebc6d364a4a593b5d1d98b0c4458cb29c5ebcdb4608139f73571012b",
+      "authority": "shipped-artifact",
+      "operation": "inspect_go_binary",
+      "limitations": [
+        "Embedded build metadata is observed file content, not proof of compiler identity, dependency authenticity or runtime behavior.",
+        "Only Go build information is inspected; function names, source mappings, type metadata and decompiled code are not recovered.",
+        "Resource guards bound stable artifact reads and cumulative header searches to 256 MiB each, aggregate embedded strings to 1 MiB, structural table decoding to 16 MiB and complete metadata payloads to 8 MiB; these are not operating-system memory or CPU limits."
+      ]
+    }
+  ]
+}

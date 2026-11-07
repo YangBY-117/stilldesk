@@ -1,0 +1,19 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "stilldesk",
+  "version": "0.1.0",
+  "description": "Background-first native app tools. Your cursor stays yours.",
+  "author": {
+    "name": "StillDesk contributors"
+  },
+  "license": "MIT",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "StillDesk",
+        "shortDescription": "Native app tools without taking over your desktop.",
+        "longDescription": "Connect background browser, message, and meeting tools through MCP. Each integration reports its supported capabilities and configuration requirements."
+      }
+    }
+  }
+}

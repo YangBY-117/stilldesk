@@ -1,0 +1,77 @@
+{
+  "version": "0.2.0",
+  "files": [
+    {
+      "path": "broker.mjs",
+      "sha256": "338d3d8fbac1d4668aab16631fddf061b5672683ca75eaad46e7a2c0e682cc27"
+    },
+    {
+      "path": "cli.mjs",
+      "sha256": "cdd653d4bec330ebfda9bcec26b8e8b42707c8a1d0dea9756e1780feeb4b0f4f"
+    },
+    {
+      "path": "extension/actions.js",
+      "sha256": "f998abe461b5773ee15aa08b835d2491eb45b66dc7ed2032f924e5afa46f65b7"
+    },
+    {
+      "path": "extension/background.js",
+      "sha256": "281c1e99358c09aac4dad050fad081d94496ceca7ec75da1b6c15d18b00fcbe6"
+    },
+    {
+      "path": "extension/dom.js",
+      "sha256": "d47cd2d6488a2d03a0fd2835b3db17f16230ea9aac18d994716da28b8dc412d8"
+    },
+    {
+      "path": "extension/manifest.json",
+      "sha256": "28ed47c8a639a9f15d03b9f4f78f6bd1ba7fa0c2ea5de2e0e9ace70b2b53bbd8"
+    },
+    {
+      "path": "lib/paths.mjs",
+      "sha256": "c7f04a457b4db61214b074818de197edf67327786a4a7af70d5adba8893ece57"
+    },
+    {
+      "path": "lib/transport.mjs",
+      "sha256": "402428514c265d099dbdbe66c5afb29f8e0bab6ee9413c7fc9d9de3e6000a299"
+    },
+    {
+      "path": "mcp-server.mjs",
+      "sha256": "6e13190a3c416aa04e46c371e903c34e8b92b9a8b21eaaaaa48d21e94b952927"
+    },
+    {
+      "path": "native-host.mjs",
+      "sha256": "1909ea38cbeb168b58ddbf1ae07dc92f43e573138be62239a66dac44cc36e3ac"
+    },
+    {
+      "path": "package.json",
+      "sha256": "17160922e48a04ef67906e0a3d38dce4692646c8ad0dc31d57f784c05cb9feac"
+    },
+    {
+      "path": "scripts/capture-page.mjs",
+      "sha256": "9c4d8804ecb7eeeb22b3f7893b2b15955142aeeaa5a86e2d4a09841d5667c64d"
+    },
+    {
+      "path": "scripts/e2e.mjs",
+      "sha256": "3d7e2f8b3017104d3e70229a3b7e7937e0b8b36e8710d59d23b3c1cf382acc60"
+    },
+    {
+      "path": "scripts/prepare.mjs",
+      "sha256": "8e816b57c224cea7328df7647f400cdb5e21f6625749e90e498482ea8bd50312"
+    },
+    {
+      "path": "scripts/register-native-host.mjs",
+      "sha256": "e5b40bffc0608daf95ea1e959633a40196ed515a987f451a7973401a0d2cc35c"
+    },
+    {
+      "path": "tests/launch.test.mjs",
+      "sha256": "4a7728dcb12070c5ac39debef32ad176c659aee2b5fd55178cbccd7e6ddc9425"
+    },
+    {
+      "path": "tests/quiet-actions.test.mjs",
+      "sha256": "d21469333d13bccb7e6bcb9211d6e29a66d316ad670602c52c34879f05a23101"
+    },
+    {
+      "path": "tests/transport.test.mjs",
+      "sha256": "6103090ff819f749667382b8f93d88a1d14c40490f7695116609189f7499d219"
+    }
+  ]
+}

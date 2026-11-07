@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "stilldesk": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "\\path\\to\\stilldesk\\bin\\stilldesk.mjs",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-07",
+  "version": "0.2.0",
+  "fixtureTests": {
+    "passed": 144,
+    "skipped": 2,
+    "failed": 0
+  },
+  "realStdioMcpVerified": true,
+  "toolCount": 9,
+  "liveMessageSendTested": false,
+  "liveMessageReadTested": false,
+  "foregroundDriverShipped": false,
+  "claudeCodeLaunched": false,
+  "sourceFiles": [
+    {
+      "path": "qq_bridge/__init__.py",
+      "sha256": "c6c7a85ca0968122865fd0bc260f084387d98e0b6916415b4d8d2ec0fe0b6a31"
+    },
+    {
+      "path": "qq_bridge/capabilities.py",
+      "sha256": "4f5e0750a204cbc95bdbdfc0c3761d6754fa5637ca2f0781982bdb44dd12538c"
+    },
+    {
+      "path": "qq_bridge/cipher.py",
+      "sha256": "d82885db9ee6baf7798d5971a21fea20c70407a5a4709615db6ec235397dd9ce"
+    },
+    {
+      "path": "qq_bridge/cli.py",
+      "sha256": "767d4c266c393bad34273b0a04ac52ec9344c8f6d2ff1856a72ae02c05e489f6"
+    },
+    {
+      "path": "qq_bridge/keys.py",
+      "sha256": "b0f36d9d4f50efa06603e2bd16eacba52dd0407c64d7c4c0c846c6dbef07945a"
+    },
+    {
+      "path": "qq_bridge/media.py",
+      "sha256": "695a272b77b19bb82bff6a34a0ffbae86964fcbd5addf60d4bc41702d3ac0a5c"
+    },
+    {
+      "path": "qq_bridge/protocol.py",
+      "sha256": "b6375f94e02da3dafce9ffc27c6f89357c345fd2b67b92be2cf4259b440722a6"
+    },
+    {
+      "path": "qq_bridge/reader.py",
+      "sha256": "acdfccf675626244f5ca9d378b5f4f7989f2bbb0eaf2ee6d7c0072f20ac3dda2"
+    },
+    {
+      "path": "qq_bridge/reading.py",
+      "sha256": "43be0271851bbed9c62ef3aa32f99a3def4e2190fc286f7f71c053d469c6b8c8"
+    },
+    {
+      "path": "qq_bridge/server.py",
+      "sha256": "c4a232b90000194149e4711c7c81c9320f04000d3bcd7cb45caeed663cc44acf"
+    },
+    {
+      "path": "qq_bridge/session.py",
+      "sha256": "47a873d84ccabb9034857cfd0d4db7411c88599ab55a8725d290d656dad1bb50"
+    },
+    {
+      "path": "qq_bridge/source.py",
+      "sha256": "387c72c60797bc87dee74aaa61476b41612cb6c9e1fb25514cbd11db4f919428"
+    }
+  ],
+  "sourceDriftAtFinalCheck": false,
+  "foregroundApiAstAudit": "passed",
+  "postChangeFocusedChecks": {
+    "passed": 26,
+    "failed": 0,
+    "scope": "reading and cursor behaviour"
+  }
+}

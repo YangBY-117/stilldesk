@@ -1,0 +1,164 @@
+{
+  "version": "0.2.0",
+  "browserFamily": "chrome",
+  "platform": "win32",
+  "passed": true,
+  "liveBrowserTest": true,
+  "dailyProfileTested": false,
+  "remoteDebugging": false,
+  "debuggerPermission": false,
+  "executableSha256": "b299662ff2155d34b7aa8475d287940aa9461fc538defecff6fdd566054541b1",
+  "completedAt": "2026-11-07T05:56:53.927Z",
+  "tests": [
+    {
+      "name": "MCP protocol and fixed tool discovery",
+      "passed": true
+    },
+    {
+      "name": "No remote debugging or extension debugger permission",
+      "passed": true
+    },
+    {
+      "name": "Native Messaging connected to isolated browser",
+      "passed": true
+    },
+    {
+      "name": "DOM snapshot reads main and cross-origin frame",
+      "passed": true
+    },
+    {
+      "name": "Snapshot discovers hidden file and closed shadow root",
+      "passed": true
+    },
+    {
+      "name": "Per-tab native zoom changes CSS viewport without activation",
+      "passed": true
+    },
+    {
+      "name": "Native value setter and input/change events",
+      "passed": true
+    },
+    {
+      "name": "Ordinary DOM click executes page handler",
+      "passed": true
+    },
+    {
+      "name": "Trusted-event restriction is preserved",
+      "passed": true
+    },
+    {
+      "name": "Pointer hover event preserves PointerEvent type",
+      "passed": true
+    },
+    {
+      "name": "Synthetic keyboard modifier is represented honestly",
+      "passed": true
+    },
+    {
+      "name": "Dedicated checkbox and select tools",
+      "passed": true
+    },
+    {
+      "name": "DOM drag/drop uses no system pointer",
+      "passed": true
+    },
+    {
+      "name": "DOM scroll and wait tools",
+      "passed": true
+    },
+    {
+      "name": "New-window links open in a background tab",
+      "passed": true
+    },
+    {
+      "name": "Selecting a page does not activate it",
+      "passed": true
+    },
+    {
+      "name": "Background screenshot fails without activation",
+      "passed": true
+    },
+    {
+      "name": "Browser download completes and local SHA-256 is verified",
+      "passed": true
+    },
+    {
+      "name": "Native dialogs report an explicit capability boundary",
+      "passed": true
+    },
+    {
+      "name": "HTTP upload byte/hash verification: normal",
+      "passed": true
+    },
+    {
+      "name": "HTTP upload byte/hash verification: hidden",
+      "passed": true
+    },
+    {
+      "name": "HTTP upload byte/hash verification: multi",
+      "passed": true
+    },
+    {
+      "name": "HTTP upload byte/hash verification: same-file",
+      "passed": true
+    },
+    {
+      "name": "HTTP upload byte/hash verification: cross-file",
+      "passed": true
+    },
+    {
+      "name": "HTTP upload byte/hash verification: shadow-file",
+      "passed": true
+    },
+    {
+      "name": "Upload outside explicit filesystem root is rejected",
+      "passed": true
+    },
+    {
+      "name": "Multiple files rejected on a single-file input",
+      "passed": true
+    },
+    {
+      "name": "Changing target input during upload prevents commit",
+      "passed": true
+    },
+    {
+      "name": "Extension independently rejects a mismatched file digest",
+      "passed": true
+    },
+    {
+      "name": "UID cannot follow a node adopted into another document",
+      "passed": true
+    },
+    {
+      "name": "Stale snapshot UID is rejected",
+      "passed": true
+    },
+    {
+      "name": "Navigation invalidates document-bound UID",
+      "passed": true
+    },
+    {
+      "name": "Active viewport screenshot",
+      "passed": true
+    },
+    {
+      "name": "Create a tab through extension API",
+      "passed": true
+    },
+    {
+      "name": "Snapshot, fill and upload work on non-secure HTTP origin",
+      "passed": true
+    },
+    {
+      "name": "Close created tab through extension API",
+      "passed": true
+    },
+    {
+      "name": "Foreground window and system pointer remain unchanged during actions",
+      "passed": true
+    }
+  ],
+  "trialConfiguration": "Official CfT --disable-field-trial-config: compiled feature defaults; no claim that the NetworkService sandbox is enabled",
+  "nativeRegistrationsRestored": true
+}

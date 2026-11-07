@@ -1,0 +1,14 @@
+{
+  "name": "@stilldesk/browser",
+  "version": "0.2.0",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "description": "Background-first Chrome and Edge browser tools through Native Messaging",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "prepare": "node scripts/prepare.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "e2e": "node scripts/e2e.mjs"
+  }
+}

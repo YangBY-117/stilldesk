@@ -1,0 +1,63 @@
+{
+  "origin": "local wechat bridge",
+  "sourceVersion": "0.5.0",
+  "files": [
+    {
+      "path": "wechat_bridge/actions.py",
+      "sha256": "ad42afac3056e943a36c1705fd1eb4a6d02affbaaf29edde50b3d5dbfca2f9ac"
+    },
+    {
+      "path": "wechat_bridge/attachments.py",
+      "sha256": "220b2d9892f2b6ac87b73fb76b91ba4d9193788b27c039c21b0821d4311a39b9"
+    },
+    {
+      "path": "wechat_bridge/cipher.py",
+      "sha256": "ab9641766dfff8c3654f707c0010ff32ecfb28ca4c473ef53ff1a8244739f554"
+    },
+    {
+      "path": "wechat_bridge/cli.py",
+      "sha256": "f24fca6085e25ba48894f9004b6b6d40a8fdedb3a73e16fb835d0916a058e425"
+    },
+    {
+      "path": "wechat_bridge/errors.py",
+      "sha256": "cb6521dda32f14038abcff0791aef9265791cabb096634c217af7eeb78c403b7"
+    },
+    {
+      "path": "wechat_bridge/keys.py",
+      "sha256": "203b3741a1105fd6948bddb1ab4614e5dda91bf76be9015ef3a5828bfffa0f7e"
+    },
+    {
+      "path": "wechat_bridge/media.py",
+      "sha256": "0e2401cd0abbb95de648a030f53951552338b167c3a0f9c5958f7b4d7f6fe714"
+    },
+    {
+      "path": "wechat_bridge/outgoing.py",
+      "sha256": "6591feb04cb209a0adb4be76a48d43c351675c94b7d2c00e1a720c8a8b376a93"
+    },
+    {
+      "path": "wechat_bridge/reader.py",
+      "sha256": "65b1e51920cd30b796f718815403fae456505324c346652b4b1481ccb36811e9"
+    },
+    {
+      "path": "wechat_bridge/runtime.py",
+      "sha256": "4fc1d7a47b918155c06cc764f56361437df8e93dafabbd76cabb4dfc2c2a3e48"
+    },
+    {
+      "path": "wechat_bridge/server.py",
+      "sha256": "29bbeeb706b6ce152aba371479c63c812781a921dd608b22d9eb675fc4dc1387"
+    },
+    {
+      "path": "wechat_bridge/session.py",
+      "sha256": "dd1060a1b155ac0ebd55b0f1539798e2e5692a6e5f575c0287531b3d8c135bba"
+    },
+    {
+      "path": "wechat_bridge/__init__.py",
+      "sha256": "3704631ceab96f44d7f6232e68f577c00305bbf0d5f13f3a7ce1ed32d502c342"
+    }
+  ],
+  "excludedModules": [
+    "accessibility.py",
+    "desktop.py",
+    "editor_watch.py"
+  ]
+}

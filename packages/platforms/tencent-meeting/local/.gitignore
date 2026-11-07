@@ -1,0 +1,7 @@
+.venv/
+.runtime/
+sessions/
+models/
+__pycache__/
+native/MeetingAudio/bin/
+native/MeetingAudio/obj/

@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stilldesk-wechat"
+version = "0.5.1"
+description = "Background-only account-bound Weixin history and verified local attachments"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = ["mcp>=1.25,<2", "cryptography>=43", "psutil>=6", "zstandard>=0.23", "apsw>=3.49", "Pillow>=12,<13", "imageio-ffmpeg>=0.6,<0.7"]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+
+[project.scripts]
+wechat-bridge = "wechat_bridge.cli:main"
+wechat-bridge-mcp = "wechat_bridge.server:main"
+
+[tool.setuptools.packages.find]
+include = ["wechat_bridge*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

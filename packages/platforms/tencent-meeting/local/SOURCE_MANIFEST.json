@@ -1,0 +1,135 @@
+{
+  "source": "Author-owned meeting-agent-local source snapshot",
+  "copiedFiles": [
+    {
+      "path": "runner.py",
+      "sha256": "6c7d52bbaae8731b08cc52111dc0db73897c93d832051cfd903f311f7719a20d"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "11ff393292a41ffffd59eb63104f77c186fe6ce3df04e79ac69c848cb3e41e85"
+    },
+    {
+      "path": "meeting_agent/asr.py",
+      "sha256": "a328f4c8416920f9be55fdccb4586ac5c4064c32829b4160e87b4e7ef8bdf572"
+    },
+    {
+      "path": "meeting_agent/audio.py",
+      "sha256": "eb8aa6c0c191b70f91f37970f120b5d587e61235e23e273318d214a56b3e1717"
+    },
+    {
+      "path": "meeting_agent/client.py",
+      "sha256": "6f761569bd9040e869359a236fe59c5ed00e9137473f49d90e4574e04a5042c3"
+    },
+    {
+      "path": "meeting_agent/engine.py",
+      "sha256": "39167f03cb8254f0f909a91c4894900e7e88784cf237b7264636bfac2b2100f5"
+    },
+    {
+      "path": "meeting_agent/mcp_server.py",
+      "sha256": "d13b73918434a2a62019d01a8f09ddb9947aafd48ec7fde611ccb27b85517fb8"
+    },
+    {
+      "path": "meeting_agent/service.py",
+      "sha256": "10e8b9c86cf5ed6d6d723dfe6fc0e3fda2a2d8eeed665a22b4e461c4e5e732d0"
+    },
+    {
+      "path": "meeting_agent/store.py",
+      "sha256": "9de68b5bd9244bdbb40a1fcf6c4814bce27eed6f2ccbd17db9fd25230cc93dd0"
+    },
+    {
+      "path": "meeting_agent/__init__.py",
+      "sha256": "b0bbd08a4dd15b5231b36290ecc53107275d730f1a6601f5171ae7e649be589c"
+    },
+    {
+      "path": "native/MeetingAudio/Program.cs",
+      "sha256": "ba977ba77d659f47a6775a3b444458f443d9df5b48996c110bd5939f35934c97"
+    },
+    {
+      "path": "native/MeetingAudio/MeetingAudio.csproj",
+      "sha256": "7f0790b71d2eca8a8c4e1ceeb9c1bba4e58252f5d891abcfb4e51d7e959b00d9"
+    },
+    {
+      "path": "tools/bootstrap.ps1",
+      "sha256": "73ae5f1dbec117bb5c3953cdc6dc59cb54b7d7bce4fa2958bcc0ad07a683e65e"
+    },
+    {
+      "path": "tools/prepare_model.py",
+      "sha256": "1c8ed52e28a7e0f162b007a06ae848748c470a1c74d68f8051c40f725e3d08f1"
+    }
+  ],
+  "excluded": [
+    "sessions",
+    "models",
+    ".runtime",
+    ".venv",
+    "test_artifacts",
+    "vendor binaries"
+  ],
+  "copiedPrivateData": false,
+  "publicChanges": [
+    "Removed legacy standalone Python MCP entry; unified StillDesk MCP owns authorization",
+    "Microphone defaults off; explicit --microphone opt-in",
+    "Private state moved outside source/model tree into STILLDESK_HOME/meeting",
+    "Exact private ACLs and atomic credential writes; reused journals rechecked",
+    "No system-site-packages inheritance during bootstrap"
+  ],
+  "currentSourceFiles": [
+    {
+      "path": "meeting_agent/__init__.py",
+      "sha256": "b0bbd08a4dd15b5231b36290ecc53107275d730f1a6601f5171ae7e649be589c"
+    },
+    {
+      "path": "meeting_agent/asr.py",
+      "sha256": "a328f4c8416920f9be55fdccb4586ac5c4064c32829b4160e87b4e7ef8bdf572"
+    },
+    {
+      "path": "meeting_agent/audio.py",
+      "sha256": "eb8aa6c0c191b70f91f37970f120b5d587e61235e23e273318d214a56b3e1717"
+    },
+    {
+      "path": "meeting_agent/client.py",
+      "sha256": "e2d2e1f1361880ce32d5c6a683872ea91900c4afe8158f238111a20c4c456a95"
+    },
+    {
+      "path": "meeting_agent/engine.py",
+      "sha256": "4f4eb9ef7dd713291de8bae8f88cf250f3ab9f6255b1e25cc1f276331b27eea5"
+    },
+    {
+      "path": "meeting_agent/service.py",
+      "sha256": "fd75b4e403a457189188230f79b7e864c098afa80a7846da4ade4aeb8825e23e"
+    },
+    {
+      "path": "meeting_agent/state.py",
+      "sha256": "488ee2597c4845933aec742ee06d2d2117aae15799d4ec3fc73ba461e8edb940"
+    },
+    {
+      "path": "meeting_agent/store.py",
+      "sha256": "d03015874b63af994dbc74c46e6ff50aac7317a937459184549cbf0cde0aa44d"
+    },
+    {
+      "path": "native/MeetingAudio/MeetingAudio.csproj",
+      "sha256": "7f0790b71d2eca8a8c4e1ceeb9c1bba4e58252f5d891abcfb4e51d7e959b00d9"
+    },
+    {
+      "path": "native/MeetingAudio/Program.cs",
+      "sha256": "ba977ba77d659f47a6775a3b444458f443d9df5b48996c110bd5939f35934c97"
+    },
+    {
+      "path": "requirements.txt",
+      "sha256": "11ff393292a41ffffd59eb63104f77c186fe6ce3df04e79ac69c848cb3e41e85"
+    },
+    {
+      "path": "runner.py",
+      "sha256": "fd88ef1ba1594988f63f98e732fe147d7b8b03ce057fcdfd81a493268ead0ae5"
+    },
+    {
+      "path": "tools/bootstrap.ps1",
+      "sha256": "c1192921a6677c2feeba654e4c938fb7f85249ec445a60208ea5c3c4f70f94b1"
+    },
+    {
+      "path": "tools/prepare_model.py",
+      "sha256": "1c8ed52e28a7e0f162b007a06ae848748c470a1c74d68f8051c40f725e3d08f1"
+    }
+  ]
+}

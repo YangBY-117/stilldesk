@@ -1,0 +1,13 @@
+{
+  "kind": "live_read_only_process_identity",
+  "actualMessageRead": false,
+  "accountDataExported": false,
+  "state": "client_not_observed",
+  "accountBound": false,
+  "reuseExistingClient": false,
+  "remoteLoginState": "unknown",
+  "reloginRecommended": false,
+  "foregroundWindowUnchanged": true,
+  "pointerPositionUnchanged": true,
+  "observedClientVersion": "9.9.31-49738"
+}

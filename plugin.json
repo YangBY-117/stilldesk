@@ -1,0 +1,17 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "stilldesk",
+  "version": "0.1.0",
+  "description": "Background-first browser and native app tools. Your cursor stays yours.",
+  "author": { "name": "StillDesk contributors", "url": "https://github.com/YangBY-117/stilldesk" },
+  "license": "MIT",
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "StillDesk",
+        "shortDescription": "Use your apps without giving up your cursor.",
+        "longDescription": "Background tools for Chrome, Edge, WeChat, QQ, Feishu and Tencent Meeting. Individual providers report their verified capabilities, account setup requirements and unavailable native actions."
+      }
+    }
+  }
+}

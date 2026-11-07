@@ -1,0 +1,94 @@
+TAP version 13
+# Subtest: new tabs default to background and explicit foreground requests are refused
+ok 1 - new tabs default to background and explicit foreground requests are refused
+  ---
+  duration_ms: 1.5464
+  type: 'test'
+  ...
+# Subtest: logical selection never calls tab activation or a window API
+ok 2 - logical selection never calls tab activation or a window API
+  ---
+  duration_ms: 0.2535
+  type: 'test'
+  ...
+# Subtest: active tabs and inactive screenshots are protected without changing focus
+ok 3 - active tabs and inactive screenshots are protected without changing focus
+  ---
+  duration_ms: 0.7941
+  type: 'test'
+  ...
+# Subtest: native dialog capability fails explicitly without touching browser UI
+ok 4 - native dialog capability fails explicitly without touching browser UI
+  ---
+  duration_ms: 0.1716
+  type: 'test'
+  ...
+# Subtest: a fake pipe server cannot receive the runtime secret or a client proof
+ok 5 - a fake pipe server cannot receive the runtime secret or a client proof
+  ---
+  duration_ms: 349.5485
+  type: 'test'
+  ...
+# Subtest: named pipe requires authentication and reports extension state
+ok 6 - named pipe requires authentication and reports extension state
+  ---
+  duration_ms: 277.1694
+  type: 'test'
+  ...
+# Subtest: two clients serialize commands and preserve response ownership
+ok 7 - two clients serialize commands and preserve response ownership
+  ---
+  duration_ms: 1097.5197
+  type: 'test'
+  ...
+# Subtest: cancelled queued actions are never dispatched and disconnection does not replay
+ok 8 - cancelled queued actions are never dispatched and disconnection does not replay
+  ---
+  duration_ms: 1059.5476
+  type: 'test'
+  ...
+# Subtest: upload roots, traversal, symlink escape, size and regular-file boundaries
+ok 9 - upload roots, traversal, symlink escape, size and regular-file boundaries
+  ---
+  duration_ms: 17.2706
+  type: 'test'
+  ...
+# Subtest: uploads are chunked below native limit, include hashes, support empty files and abort after failure
+ok 10 - uploads are chunked below native limit, include hashes, support empty files and abort after failure
+  ---
+  duration_ms: 26.9151
+  type: 'test'
+  ...
+# Subtest: MCP initializes, lists explicit-page tools, rejects invalid args and reports errors
+ok 11 - MCP initializes, lists explicit-page tools, rejects invalid args and reports errors
+  ---
+  duration_ms: 463.6782
+  type: 'test'
+  ...
+# Subtest: real native host validates origin and transports fragmented uint32LE JSON frames
+ok 12 - real native host validates origin and transports fragmented uint32LE JSON frames
+  ---
+  duration_ms: 735.2495
+  type: 'test'
+  ...
+# Subtest: native host locations cover Chrome, Edge and Chromium without embedding user paths
+ok 13 - native host locations cover Chrome, Edge and Chromium without embedding user paths
+  ---
+  duration_ms: 0.3942
+  type: 'test'
+  ...
+# Subtest: download metadata never grants arbitrary local file reads
+ok 14 - download metadata never grants arbitrary local file reads
+  ---
+  duration_ms: 14.7338
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4624.3347

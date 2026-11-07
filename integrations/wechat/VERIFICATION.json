@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-07",
+  "version": "0.5.1",
+  "fixtureTests": {
+    "passed": 268,
+    "skipped": 1,
+    "failed": 0
+  },
+  "realStdioMcpVerified": true,
+  "toolCount": 16,
+  "liveMessageSendTested": false,
+  "liveMessageReadTested": false,
+  "foregroundDriverShipped": false,
+  "claudeCodeLaunched": false,
+  "sourceFiles": [
+    {
+      "path": "wechat_bridge/__init__.py",
+      "sha256": "a98c4eecba3e2d5347afff8ef4554f8f02ce9c00df1ca5401ebe6e847e37e919"
+    },
+    {
+      "path": "wechat_bridge/actions.py",
+      "sha256": "2b05439503d944a47c6837bafeb2f03da46c4f79b4ecdc393ae53f3282a9dc4e"
+    },
+    {
+      "path": "wechat_bridge/attachments.py",
+      "sha256": "220b2d9892f2b6ac87b73fb76b91ba4d9193788b27c039c21b0821d4311a39b9"
+    },
+    {
+      "path": "wechat_bridge/capabilities.py",
+      "sha256": "bb1a33a4513066ac982b645caa88c0abcc37f6c5b2a240c7e19a9c80bbdfc0e6"
+    },
+    {
+      "path": "wechat_bridge/cipher.py",
+      "sha256": "ab9641766dfff8c3654f707c0010ff32ecfb28ca4c473ef53ff1a8244739f554"
+    },
+    {
+      "path": "wechat_bridge/cli.py",
+      "sha256": "4e1230c6dbfeac6943d4207beb3aec3ae7a0ad5d4e21025b2e19805193da6045"
+    },
+    {
+      "path": "wechat_bridge/errors.py",
+      "sha256": "cb6521dda32f14038abcff0791aef9265791cabb096634c217af7eeb78c403b7"
+    },
+    {
+      "path": "wechat_bridge/keys.py",
+      "sha256": "203b3741a1105fd6948bddb1ab4614e5dda91bf76be9015ef3a5828bfffa0f7e"
+    },
+    {
+      "path": "wechat_bridge/media.py",
+      "sha256": "0e2401cd0abbb95de648a030f53951552338b167c3a0f9c5958f7b4d7f6fe714"
+    },
+    {
+      "path": "wechat_bridge/outgoing.py",
+      "sha256": "6591feb04cb209a0adb4be76a48d43c351675c94b7d2c00e1a720c8a8b376a93"
+    },
+    {
+      "path": "wechat_bridge/reader.py",
+      "sha256": "db588f22950502d7015a4665fd9f6a0f1fe9c8c193b3c9bbd9519a1ac0e924ab"
+    },
+    {
+      "path": "wechat_bridge/runtime.py",
+      "sha256": "4fc1d7a47b918155c06cc764f56361437df8e93dafabbd76cabb4dfc2c2a3e48"
+    },
+    {
+      "path": "wechat_bridge/server.py",
+      "sha256": "8d1279506d29c6b74d5c3afd3296536e4a63d9df2821be3bd31928f208f86382"
+    },
+    {
+      "path": "wechat_bridge/session.py",
+      "sha256": "5af65ea03ba49e3871516bcc15f695edb2d34250bd7ee2b09edc2c8f406fe437"
+    }
+  ],
+  "sourceDriftAtFinalCheck": false,
+  "foregroundApiAstAudit": "passed",
+  "postChangeFocusedChecks": {
+    "passed": 9,
+    "failed": 0,
+    "scope": "quiet policy and real stdio protocol"
+  }
+}

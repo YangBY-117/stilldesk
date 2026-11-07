@@ -1,0 +1,13 @@
+{
+  "kind": "live_read_only_process_identity",
+  "actualMessageRead": false,
+  "accountDataExported": false,
+  "state": "account_open",
+  "accountBound": true,
+  "reuseExistingClient": true,
+  "remoteLoginState": "unknown",
+  "reloginRecommended": false,
+  "foregroundWindowUnchanged": true,
+  "pointerPositionUnchanged": true,
+  "observedExecutableVersion": "4.2.0.11"
+}

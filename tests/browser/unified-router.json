@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "scope": "public unified MCP router + real Native Messaging + local synthetic upload/download",
+  "browserRemoteDebugging": false,
+  "browserInheritedStillDeskEnvironment": false,
+  "checks": [
+    {
+      "name": "Router discovers all native tool groups",
+      "passed": true
+    },
+    {
+      "name": "Pinned host runtime works without browser environment inheritance",
+      "passed": true
+    },
+    {
+      "name": "Public prefixed tool routes a form action",
+      "passed": true
+    },
+    {
+      "name": "Public upload root reaches the server with the real file",
+      "passed": true
+    },
+    {
+      "name": "Public download-root argv permits independent SHA-256 readback",
+      "passed": true
+    },
+    {
+      "name": "Downloaded bytes equal the synthetic source",
+      "passed": true
+    }
+  ],
+  "nativeRegistrationsRestored": true
+}

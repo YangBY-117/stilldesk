@@ -1,0 +1,12 @@
+{
+  "servers": {
+    "stilldesk": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "\\path\\to\\stilldesk\\bin\\stilldesk.mjs",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "origin": "local qq bridge",
+  "sourceVersion": "0.1.1",
+  "files": [
+    {
+      "path": "qq_bridge/cipher.py",
+      "sha256": "d82885db9ee6baf7798d5971a21fea20c70407a5a4709615db6ec235397dd9ce"
+    },
+    {
+      "path": "qq_bridge/cli.py",
+      "sha256": "ae2c873c20475fcde10f0761640105d9a442f30d72ef930b1325aacddff4c928"
+    },
+    {
+      "path": "qq_bridge/keys.py",
+      "sha256": "b0f36d9d4f50efa06603e2bd16eacba52dd0407c64d7c4c0c846c6dbef07945a"
+    },
+    {
+      "path": "qq_bridge/media.py",
+      "sha256": "695a272b77b19bb82bff6a34a0ffbae86964fcbd5addf60d4bc41702d3ac0a5c"
+    },
+    {
+      "path": "qq_bridge/protocol.py",
+      "sha256": "b6375f94e02da3dafce9ffc27c6f89357c345fd2b67b92be2cf4259b440722a6"
+    },
+    {
+      "path": "qq_bridge/reader.py",
+      "sha256": "50503ac598d07401b99e5c9cb9903503446bff9e172760bb6148b52318bb5ddc"
+    },
+    {
+      "path": "qq_bridge/server.py",
+      "sha256": "dea3f749ec2d97979a9898e80274475c6b48fe213e29cb2c771bdf3ce1be77a2"
+    },
+    {
+      "path": "qq_bridge/source.py",
+      "sha256": "1a82646a89978c39f4a79ce8c2472c6ca15f4e9656e99b6b6e841a01fcd76499"
+    },
+    {
+      "path": "qq_bridge/__init__.py",
+      "sha256": "a9e14fe85c09b0fbede32afd14bdeddd034084c93780988252c72eb7aeeb0f84"
+    }
+  ],
+  "excludedModules": []
+}

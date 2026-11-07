@@ -1,0 +1,17 @@
+{
+  "name": "stilldesk",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Background-first tools for agents. Your cursor stays yours.",
+  "license": "MIT",
+  "engines": { "node": ">=22" },
+  "bin": { "stilldesk": "bin/stilldesk.mjs" },
+  "scripts": {
+    "doctor": "node bin/stilldesk.mjs doctor",
+    "test": "node scripts/test.mjs",
+    "check": "node scripts/check.mjs",
+    "site": "node scripts/preview.mjs",
+    "release:check": "node scripts/release-check.mjs"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "mcp": {
+    "servers": {
+      "stilldesk": {
+        "transport": "stdio",
+        "enabled": true,
+        "command": "node",
+        "args": [
+          "\\path\\to\\stilldesk\\bin\\stilldesk.mjs",
+          "mcp"
+        ]
+      }
+    }
+  }
+}

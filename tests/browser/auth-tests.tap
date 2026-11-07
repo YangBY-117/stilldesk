@@ -1,0 +1,36 @@
+TAP version 13
+# Subtest: a fake pipe server cannot receive the runtime secret or a client proof
+ok 1 - a fake pipe server cannot receive the runtime secret or a client proof
+  ---
+  duration_ms: 3815.4691
+  type: 'test'
+  ...
+# \#< CLIXML
+# Subtest: shared existing runtime and credential explicit grants are replaced by exact private DACLs
+ok 2 - shared existing runtime and credential explicit grants are replaced by exact private DACLs
+  ---
+  duration_ms: 3819.3076
+  type: 'test'
+  ...
+# Subtest: named pipe requires authentication and reports extension state
+ok 3 - named pipe requires authentication and reports extension state
+  ---
+  duration_ms: 3315.8762
+  type: 'test'
+  ...
+# Subtest: real native host validates origin and transports fragmented uint32LE JSON frames
+ok 4 - real native host validates origin and transports fragmented uint32LE JSON frames
+  ---
+  duration_ms: 4514.7749
+  type: 'test'
+  ...
+# <Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04"><Obj S="progress" RefId="0"><TN RefId="0"><T>System.Management.Automation.PSCustomObject</T><T>System.Object</T></TN><MS><I64 N="SourceId">1</I64><PR N="Record"><AV>����׼���״�ʹ��ģ�顣</AV><AI>0</AI><Nil /><PI>-1</PI><PC>-1</PC><T>Completed</T><SR>-1</SR><SD> </SD></PR></MS></Obj></Objs>
+1..4
+# tests 4
+# suites 0
+# pass 4
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 15704.4335

@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "StillDesk Browser",
+  "version": "0.2.0",
+  "description": "Background-first agent tools for Chrome and Edge through Native Messaging.",
+  "minimum_chrome_version": "120",
+  "permissions": [
+    "nativeMessaging",
+    "scripting",
+    "tabs",
+    "webNavigation",
+    "downloads"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "StillDesk Browser: Native Messaging bridge"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj0QIO0nW9k6hCpdw2CBZxlLledo7K6+8q0DMlBMn+e5PArTo4H593Jdsmv6ICqJNlhyDXLH2AJWf9Z2ZDRltd3LLeNrTwgd88E5znFPjVhhjfta8GLx20G9Y77CE1eQpAP+/7/Q3PLmm2ygbCBW7Gw5MerAUxfDtoZRfIdmBgHh5JIkQofTPr/Fr9w3OHXeBlp9c5mzKhsJnARIjDFcbfri5a7mqNNCG66I8bfyL3u2HNlyyE7QJh+ryn9mQwQXd0Qy8paNnzzUMx6/2JxPUToJyd6WzBQRgPJNuG7m/XIwgbt9Br+AIY67DYJasPlDCiz8lWHUcHTOjKQ9YXgFQzQIDAQAB"
+}

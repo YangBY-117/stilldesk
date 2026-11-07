@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-07",
+  "version": "0.1.0",
+  "node": { "passed": 48, "failed": 0, "skipped": 0 },
+  "wechat": { "passed": 268, "failed": 0, "skipped": 1, "scope": "synthetic fixtures and stdio MCP" },
+  "qq": { "passed": 144, "failed": 0, "skipped": 2, "scope": "synthetic fixtures and stdio MCP" },
+  "meetingPrivateState": { "passed": 5, "failed": 0, "audioCaptureStarted": false },
+  "chromeLiveFixture": { "passed": 37, "failed": 0, "dailyProfile": false },
+  "edgeLiveFixture": { "passed": 37, "failed": 0, "dailyProfile": false },
+  "unifiedLiveBrowserFlow": { "passed": 6, "failed": 0, "browserEnvironmentInheritanceRequired": false },
+  "claudeCodeLaunched": false,
+  "realMessagesSent": false,
+  "userAudioCaptured": false,
+  "harnessRuntimeAcceptanceClaimed": false,
+  "hostedCi": "See GitHub Actions; local checks do not imply hosted CI completion."
+}

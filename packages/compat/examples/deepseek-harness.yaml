@@ -1,0 +1,7 @@
+- id: "mcp-stilldesk"
+  name: "@deepseek-ai/dsh-mcp-client"
+  config:
+    serverName: "stilldesk"
+    transport: "stdio"
+    command: "node"
+    args: ["\\path\\to\\stilldesk\\bin\\stilldesk.mjs","mcp"]
