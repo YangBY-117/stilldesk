@@ -129,3 +129,57 @@ endorsement or benchmark claim was introduced.
 5. Publish only the reviewed tracked source tree. Any later source, dependency,
    asset, configuration, generated archive or history change requires the
    relevant checks and a fresh scan before distribution.
+
+## Follow-up: content-based acquisition consistency
+
+After the initial publication review, the first public source-check run exposed
+a real QQ snapshot-consistency failure. The earlier metadata/header checks could
+miss a same-length write beyond the observed header when filesystem identity
+and timestamps did not change. The shared WeChat acquisition/cache mechanism
+had the same underlying gap. The failing case was retained, not weakened or
+skipped. A versioned release remained gated on the repaired suites and CI.
+
+This follow-up is a focused code review of the two public `cipher.py` modules,
+their acquisition/cache regression tests and updated verification summaries. It
+does not replace or repeat the initial full-tree secret scan, and it did not
+touch either original private bridge project or any account data.
+
+The reviewed fix now includes the complete encrypted DB and WAL contents in the
+source signature. Observation, encrypted acquisition, private-cache hashing and
+fallback rollback-backup copying use unbuffered reads of at most 1 MiB per block.
+Each read pass consumes only its initially observed length N plus one growth
+probe; shortening, growth or identity replacement fails explicitly rather than
+following an expanding EOF. Acquisition compares its streamed SHA-256 against
+the initial complete digest and rechecks the complete DB/WAL signature after
+copying. Cache format and MAC domains are upgraded (QQ v3, WeChat v2).
+
+Changed private-cache input is treated as a cache miss. Failure while making a
+fallback backup does not publish the replacement database or stamp. The tests
+also preserve independent validation of the acquired historical view when the
+real client subsequently commits new data. This remains an unlocked,
+per-database checked capture, not a transaction across application shards.
+
+Independent verification against the final follow-up source:
+
+- QQ cipher/acquisition tests: **71 passed**, including all nine new adversarial
+  cases for metadata/header collisions, cache refresh, growing input and backup
+  failure behavior.
+- WeChat cipher/acquisition tests: **34 passed**, including the corresponding
+  nine new cases.
+- Existing cache-only pagination and long-poll isolation checks: **4 passed**
+  across the two adapters. `refresh=false` behavior remains intact.
+
+The owning worker separately reports full-suite results of QQ **153 passed /
+2 skipped** and WeChat **277 passed / 1 skipped**. Those complete-suite counts
+are distinct from this review's independently executed focused checks.
+
+The N+1 limit is **per pass**, not a constant total-byte or wall-clock budget for
+an entire refresh. Full-content observation and validation are linear in input
+size, can involve multiple passes, and source-change retries remain capped at
+three acquisition attempts. This is a consistency improvement, not a measured
+speed claim or a guarantee of freshness at return time.
+
+Follow-up verdict: **no source-review blocker remains for the next CI run**.
+That statement does not mark the later CI run, release archive or version tag
+as passed. The root release workflow must still verify its final results and
+re-scan changed public text before distributing a versioned package.
