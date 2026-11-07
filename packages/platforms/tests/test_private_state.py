@@ -4,7 +4,6 @@ from ctypes import wintypes
 import json
 import os
 from pathlib import Path
-import re
 import stat
 import subprocess
 import sys
@@ -42,12 +41,109 @@ def windows_sddl(path):
         kernel.LocalFree(descriptor)
 
 
+def windows_acl_entries(descriptor):
+    """Read binary ACE SIDs; SDDL display aliases are not principal identities."""
+    advapi = ctypes.WinDLL("advapi32", use_last_error=True)
+    kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+    get_dacl = advapi.GetSecurityDescriptorDacl
+    get_dacl.argtypes = [ctypes.c_void_p, ctypes.POINTER(wintypes.BOOL),
+                        ctypes.POINTER(ctypes.c_void_p), ctypes.POINTER(wintypes.BOOL)]
+    get_dacl.restype = wintypes.BOOL
+    get_ace = advapi.GetAce
+    get_ace.argtypes = [ctypes.c_void_p, wintypes.DWORD, ctypes.POINTER(ctypes.c_void_p)]
+    get_ace.restype = wintypes.BOOL
+    valid_sid = advapi.IsValidSid
+    valid_sid.argtypes = [ctypes.c_void_p]
+    valid_sid.restype = wintypes.BOOL
+    sid_string = advapi.ConvertSidToStringSidW
+    sid_string.argtypes = [ctypes.c_void_p, ctypes.POINTER(ctypes.c_void_p)]
+    sid_string.restype = wintypes.BOOL
+    control = advapi.GetSecurityDescriptorControl
+    control.argtypes = [ctypes.c_void_p, ctypes.POINTER(wintypes.WORD), ctypes.POINTER(wintypes.DWORD)]
+    control.restype = wintypes.BOOL
+    kernel.LocalFree.argtypes = [ctypes.c_void_p]
+
+    class AclHeader(ctypes.Structure):
+        _fields_ = [("revision", ctypes.c_ubyte), ("reserved", ctypes.c_ubyte),
+                    ("size", wintypes.WORD), ("ace_count", wintypes.WORD), ("reserved2", wintypes.WORD)]
+
+    present, defaulted = wintypes.BOOL(), wintypes.BOOL()
+    dacl = ctypes.c_void_p()
+    if not get_dacl(descriptor, ctypes.byref(present), ctypes.byref(dacl), ctypes.byref(defaulted)):
+        raise ctypes.WinError(ctypes.get_last_error())
+    if not present.value or not dacl.value:
+        raise AssertionError("Private state must have a non-null DACL")
+    entries = []
+    for index in range(AclHeader.from_address(dacl.value).ace_count):
+        ace = ctypes.c_void_p()
+        if not get_ace(dacl, index, ctypes.byref(ace)):
+            raise ctypes.WinError(ctypes.get_last_error())
+        # Standard ACCESS_ALLOWED_ACE/ACCESS_DENIED_ACE: 4-byte header, mask, SID.
+        # Reject other ACE layouts rather than reading their fields incorrectly.
+        ace_type = ctypes.c_ubyte.from_address(ace.value).value
+        ace_size = wintypes.WORD.from_address(ace.value + 2).value
+        if ace_type not in (0, 1) or ace_size < 16:
+            raise AssertionError("Unexpected ACE layout in private state DACL")
+        sid = ctypes.c_void_p(ace.value + 8)
+        if not valid_sid(sid):
+            raise AssertionError("Invalid binary SID in private state DACL")
+        output = ctypes.c_void_p()
+        if not sid_string(sid, ctypes.byref(output)):
+            raise ctypes.WinError(ctypes.get_last_error())
+        try:
+            entries.append({"sid": ctypes.wstring_at(output), "type": ace_type,
+                            "mask": wintypes.DWORD.from_address(ace.value + 4).value})
+        finally:
+            kernel.LocalFree(output)
+    flags, revision = wintypes.WORD(), wintypes.DWORD()
+    if not control(descriptor, ctypes.byref(flags), ctypes.byref(revision)):
+        raise ctypes.WinError(ctypes.get_last_error())
+    return entries, bool(flags.value & 0x1000)  # SE_DACL_PROTECTED
+
+
+def windows_private_acl(path):
+    advapi = ctypes.WinDLL("advapi32", use_last_error=True)
+    kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+    get = advapi.GetNamedSecurityInfoW
+    get.argtypes = [wintypes.LPWSTR, wintypes.DWORD, wintypes.DWORD, ctypes.c_void_p,
+                    ctypes.c_void_p, ctypes.c_void_p, ctypes.c_void_p, ctypes.POINTER(ctypes.c_void_p)]
+    get.restype = wintypes.DWORD
+    kernel.LocalFree.argtypes = [ctypes.c_void_p]
+    descriptor = ctypes.c_void_p()
+    error = get(str(path), 1, 4, None, None, None, None, ctypes.byref(descriptor))
+    if error:
+        raise ctypes.WinError(error)
+    try:
+        return windows_acl_entries(descriptor)
+    finally:
+        kernel.LocalFree(descriptor)
+
+
+def acl_fixture_from_sddl(sddl):
+    advapi = ctypes.WinDLL("advapi32", use_last_error=True)
+    kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+    convert = advapi.ConvertStringSecurityDescriptorToSecurityDescriptorW
+    convert.argtypes = [wintypes.LPCWSTR, wintypes.DWORD, ctypes.POINTER(ctypes.c_void_p), ctypes.c_void_p]
+    convert.restype = wintypes.BOOL
+    kernel.LocalFree.argtypes = [ctypes.c_void_p]
+    descriptor = ctypes.c_void_p()
+    if not convert(sddl, 1, ctypes.byref(descriptor), None):
+        raise ctypes.WinError(ctypes.get_last_error())
+    try:
+        return windows_acl_entries(descriptor)
+    finally:
+        kernel.LocalFree(descriptor)
+
+
 def assert_private(test, path, directory):
     if os.name == "nt":
-        descriptor = windows_sddl(path)
-        trustees = re.findall(r";;;([^\)]+)\)", descriptor)
-        test.assertEqual(set(trustees), {"SY", state.current_user_sid()}, "Unexpected trustees in private DACL")
-        test.assertIn("D:P", descriptor, "DACL must be protected")
+        entries, protected = windows_private_acl(path)
+        test.assertEqual(len(entries), 2, "Private DACL must contain exactly two ACEs")
+        test.assertEqual({entry["sid"] for entry in entries}, {"S-1-5-18", state.current_user_sid()},
+                         "Unexpected canonical SID identities in private DACL")
+        test.assertTrue(all(entry["type"] == 0 and entry["mask"] == 0x1F01FF for entry in entries),
+                        "Private DACL must have exactly full-control allow entries")
+        test.assertTrue(protected, "DACL must be protected")
     else:
         test.assertEqual(stat.S_IMODE(path.stat().st_mode), 0o700 if directory else 0o600)
 
@@ -120,6 +216,22 @@ class PrivateMeetingState(unittest.TestCase):
         with patch.dict(os.environ, {"STILLDESK_HOME": "relative"}):
             with self.assertRaises(ValueError):
                 state.state_root()
+
+    @unittest.skipUnless(os.name == "nt", "Windows binary SID normalization fixture")
+    def test_system_and_local_admin_aliases_are_canonicalized_by_windows(self):
+        # Pure descriptor fixtures: no filesystem ACL changes, account lookup,
+        # client launch or access to any real user's account data.
+        entries, protected = acl_fixture_from_sddl("D:P(A;;FA;;;SY)(A;;FA;;;LA)")
+        self.assertTrue(protected)
+        self.assertEqual(len(entries), 2)
+        self.assertEqual(entries[0], {"sid": "S-1-5-18", "type": 0, "mask": 0x1F01FF})
+        admin_sid = entries[1]["sid"]
+        self.assertRegex(admin_sid, r"^S-1-5-21-(?:[0-9]+-){3}500$")
+        self.assertNotEqual(admin_sid, "LA")
+        raw_entries, raw_protected = acl_fixture_from_sddl(
+            f"D:P(A;;FA;;;S-1-5-18)(A;;FA;;;{admin_sid})")
+        self.assertEqual(raw_entries, entries)
+        self.assertEqual(raw_protected, protected)
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ live-account acceptance and installed-harness acceptance.
 | JavaScript/protocol/client-format suite | 48 passed, 0 skipped | Browser IPC/quiet gates, platform fixtures, client schemas, core transport and actual unified stdio MCP |
 | WeChat fixture suite | 277 passed, 1 skipped | Synthetic local storage/media/cursor data; no live send |
 | QQ fixture suite | 153 passed, 2 skipped | Synthetic encrypted pages, messages, media and cursors |
-| Meeting state permissions | 5 passed | External state paths, exact private permissions, atomic credentials and reused journals; no audio capture |
+| Meeting state permissions | 6 passed | External state paths, exact private permissions, atomic credentials and reused journals; no audio capture |
 | Chrome browser workflows | 37/37 passed | Isolated Chrome for Testing 157 and local HTTP fixtures |
 | Edge browser workflows | 37/37 passed | Isolated Edge 156 and local HTTP fixtures |
 | Public unified browser MCP flow | 6/6 passed | Real router → Native Messaging → page form/upload → browser download → independent local SHA-256 |
@@ -50,3 +50,5 @@ these observations nor fixture uploads prove acceptance on every real website.
 
 Current hosted CI status belongs to GitHub Actions, not this local record.
 Original detailed runtime paths and logs remain outside the public artifact.
+
+Windows permission checks compare canonical binary SID identities rather than raw SDDL aliases. A dedicated alias roundtrip fixture keeps the exact two-principal FullControl/Allow/protected-DACL requirement intact on both ordinary and built-in system accounts.
