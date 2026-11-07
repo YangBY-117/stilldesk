@@ -6,8 +6,8 @@ live-account acceptance and installed-harness acceptance.
 | Check | Result | Scope |
 | --- | --- | --- |
 | JavaScript/protocol/client-format suite | 48 passed, 0 skipped | Browser IPC/quiet gates, platform fixtures, client schemas, core transport and actual unified stdio MCP |
-| WeChat fixture suite | 268 passed, 1 skipped | Synthetic local storage/media/cursor data; no live send |
-| QQ fixture suite | 144 passed, 2 skipped | Synthetic encrypted pages, messages, media and cursors |
+| WeChat fixture suite | 277 passed, 1 skipped | Synthetic local storage/media/cursor data; no live send |
+| QQ fixture suite | 153 passed, 2 skipped | Synthetic encrypted pages, messages, media and cursors |
 | Meeting state permissions | 5 passed | External state paths, exact private permissions, atomic credentials and reused journals; no audio capture |
 | Chrome browser workflows | 37/37 passed | Isolated Chrome for Testing 157 and local HTTP fixtures |
 | Edge browser workflows | 37/37 passed | Isolated Edge 156 and local HTTP fixtures |
@@ -30,6 +30,14 @@ The three Python skips require symbolic-link privileges unavailable in those
 runs. They are not counted as passed. An independent reviewer separately ran
 affected protocol, schema and filesystem checks; the final sanitizer report
 states its coverage and residual warnings.
+
+The first hosted QQ run exposed a metadata-only source-signature gap. Both
+readers were corrected and each received nine additional regression cases for
+same-size/stat/header collisions, WAL changes, cache invalidation, bounded file
+growth and failed-publication rollback. The original failing test was retained.
+The local counts above include this repair. Freshness checks now perform linear
+source I/O; explicit `refresh=false` index queries remain unchanged. This still
+does not claim a cross-database atomic snapshot.
 
 No Claude Code process was launched. No real contact received a test message.
 No user meeting or microphone capture was started. Native app account-specific

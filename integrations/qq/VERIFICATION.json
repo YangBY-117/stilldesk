@@ -2,7 +2,7 @@
   "date": "2026-11-07",
   "version": "0.2.0",
   "fixtureTests": {
-    "passed": 144,
+    "passed": 153,
     "skipped": 2,
     "failed": 0
   },
@@ -23,7 +23,7 @@
     },
     {
       "path": "qq_bridge/cipher.py",
-      "sha256": "d82885db9ee6baf7798d5971a21fea20c70407a5a4709615db6ec235397dd9ce"
+      "sha256": "5268132a5a608ac3dd85763951ca02bc6a87d7ba6e91cb10d667ddc3d6a178aa"
     },
     {
       "path": "qq_bridge/cli.py",
@@ -68,5 +68,15 @@
     "passed": 26,
     "failed": 0,
     "scope": "reading and cursor behaviour"
+  },
+  "consistencyRegression": {
+    "trigger": "same_length_write_with_delayed_or_colliding_metadata",
+    "newCases": 9,
+    "sourceDigest": "complete_sha256",
+    "memoryBlockBytes": 1048576,
+    "maxReadPerPass": "initial_size_plus_one",
+    "freshnessCost": "linear_source_io",
+    "crossDatabaseAtomic": false,
+    "repairedCiResult": "pending_root_rerun"
   }
 }

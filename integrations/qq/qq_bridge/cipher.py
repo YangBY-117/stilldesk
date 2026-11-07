@@ -34,7 +34,8 @@ QQ_HEADER_SIZE = 1024
 WAL_HEADER_SIZE = 32
 WAL_FRAME_SIZE = 24 + PAGE_SIZE
 SQLITE_HEADER = b"SQLite format 3\x00"
-_CACHE_VERSION = 2
+_CACHE_VERSION = 3
+_READ_BLOCK_SIZE = 1024 * 1024
 _LOCK_GUARD = threading.Lock()
 _LOCKS: dict[str, threading.Lock] = {}
 
@@ -137,9 +138,23 @@ def _path_matches_handle(path: Path, handle_stat: dict) -> bool:
 
 def _observe_file(path: Path, head_size: int, *, required: bool = False) -> dict | None:
     try:
-        with path.open("rb") as handle:
+        # Source writers can defer timestamps while NTFS handles stay open.
+        # Read the complete initial length; first-page hashes miss later pages.
+        with path.open("rb", buffering=0) as handle:
             before = _handle_identity(handle)
-            head = handle.read(head_size)
+            head = handle.read(min(head_size, before["size"]))
+            if len(head) != min(head_size, before["size"]):
+                raise _SourceChanged(f"Source shortened while observing {path.name}")
+            content = hashlib.sha256(head)
+            remaining = before["size"] - len(head)
+            while remaining:
+                block = handle.read(min(_READ_BLOCK_SIZE, remaining))
+                if not block:
+                    raise _SourceChanged(f"Source shortened while observing {path.name}")
+                content.update(block)
+                remaining -= len(block)
+            if handle.read(1):
+                raise _SourceChanged(f"Source grew while observing {path.name}")
             after = _handle_identity(handle)
     except FileNotFoundError:
         if required:
@@ -147,7 +162,8 @@ def _observe_file(path: Path, head_size: int, *, required: bool = False) -> dict
         return None
     if before != after or not _path_matches_handle(path, after):
         raise _SourceChanged(f"Source changed while observing {path.name}")
-    return {"stat": before, "head_sha256": hashlib.sha256(head).hexdigest()}
+    return {"stat": before, "head_sha256": hashlib.sha256(head).hexdigest(),
+            "content_sha256": content.hexdigest()}
 
 
 def _source_signature(source: Path) -> dict:
@@ -312,10 +328,37 @@ def _quick_check(path: Path) -> None:
 
 def _file_digest(path: Path) -> str:
     digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        while block := handle.read(1024 * 1024):
+    with path.open("rb", buffering=0) as handle:
+        before = _handle_identity(handle)
+        remaining = before["size"]
+        while remaining:
+            block = handle.read(min(1024 * 1024, remaining))
+            if not block:
+                raise SnapshotError("Private snapshot shortened while hashing")
             digest.update(block)
+            remaining -= len(block)
+        if handle.read(1) or _handle_identity(handle) != before or not _path_matches_handle(path, before):
+            raise SnapshotError("Private snapshot changed while hashing")
     return digest.hexdigest()
+
+
+def _backup_copy(source: Path, destination: Path) -> None:
+    """Keep rollback backup reads finite even on filesystems without hard links."""
+    digest = hashlib.sha256()
+    with source.open("rb", buffering=0) as incoming, destination.open("wb") as outgoing:
+        before = _handle_identity(incoming)
+        remaining = before["size"]
+        while remaining:
+            block = incoming.read(min(1024 * 1024, remaining))
+            if not block:
+                raise SnapshotError("Previous snapshot shortened while backing up")
+            outgoing.write(block)
+            digest.update(block)
+            remaining -= len(block)
+        if incoming.read(1) or _handle_identity(incoming) != before or not _path_matches_handle(source, before):
+            raise SnapshotError("Previous snapshot changed while backing up")
+    if _file_digest(source) != digest.hexdigest():
+        raise SnapshotError("Previous snapshot content changed while backing up")
 
 
 def _canonical(value: dict) -> bytes:
@@ -323,7 +366,7 @@ def _canonical(value: dict) -> bytes:
 
 
 def _cache_mac(metadata: dict, key: bytes) -> str:
-    cache_key = hmac.new(key, b"qq-agent-bridge authenticated snapshot cache v2", hashlib.sha256).digest()
+    cache_key = hmac.new(key, b"qq-agent-bridge authenticated snapshot cache v3", hashlib.sha256).digest()
     return hmac.new(cache_key, _canonical(metadata), hashlib.sha256).hexdigest()
 
 
@@ -350,7 +393,7 @@ def _trusted_cache(destination: Path, key: bytes, signature: dict) -> dict | Non
         if _metadata_path(destination).read_bytes() != metadata_bytes:
             return None
         return _public(metadata, False)
-    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, SnapshotError):
         return None
 
 
@@ -373,10 +416,21 @@ def _acquire_files(source: Path, copied: Path, signature: dict) -> str:
                       signature["wal"], "WAL"))
     for original, destination, expected, label in pairs:
         try:
-            with original.open("rb") as inp, destination.open("wb") as out:
+            with original.open("rb", buffering=0) as inp, destination.open("wb") as out:
                 _check_open_file(inp, expected, label)
-                while block := inp.read(1024 * 1024):
+                remaining = expected["stat"]["size"]
+                content = hashlib.sha256()
+                while remaining:
+                    block = inp.read(min(_READ_BLOCK_SIZE, remaining))
+                    if not block:
+                        raise _SourceChanged(f"{label} shortened during encrypted acquisition")
                     out.write(block)
+                    content.update(block)
+                    remaining -= len(block)
+                if inp.read(1):
+                    raise _SourceChanged(f"{label} grew during encrypted acquisition")
+                if content.hexdigest() != expected["content_sha256"]:
+                    raise _SourceChanged(f"{label} content changed during encrypted acquisition")
                 _check_open_file(inp, expected, label)
         except FileNotFoundError:
             raise _SourceChanged(f"{label} disappeared during encrypted acquisition") from None
@@ -405,9 +459,7 @@ def _publish(temporary: Path, destination: Path, metadata: dict, key: bytes) -> 
                 os.link(destination, backup)
             except OSError:
                 # Some filesystems do not support hard links.
-                with destination.open("rb") as src, backup.open("wb") as dst:
-                    while block := src.read(1024 * 1024):
-                        dst.write(block)
+                _backup_copy(destination, backup)
         os.replace(temporary, destination)
         replaced = True
         os.replace(stamp_temp, stamp)
@@ -470,7 +522,7 @@ def snapshot(source: Path, destination: Path, key: bytes) -> dict:
                 private_signature = _source_signature(encrypted)
                 coverage = _capture(encrypted, temporary, key, private_signature)
                 coverage.update({"acquisition": "stable_read_only_encrypted_db_and_wal_copy",
-                    "stability": "source_identity_size_timestamps_headers_checked_before_after_acquisition",
+                    "stability": "matching_full_content_sha256_and_identity_before_during_after_acquisition",
                     "freshness": "authenticated_commit_in_acquired_files_at_captured_at"})
                 _quick_check(temporary)
                 metadata = {"version": _CACHE_VERSION, "path": str(destination),

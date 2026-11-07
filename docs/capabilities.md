@@ -23,8 +23,8 @@ proof that a third-party website or app can never display its own notification.
 | Provider | Verified scope | Limits and setup |
 | --- | --- | --- |
 | Browser | Chrome for Testing 157 and Edge 156, each 37/37 isolated local-fixture checks; uploads and downloads checked by bytes and SHA-256; mouse and foreground unchanged | Native Messaging extension installation; fixed runtime binds one browser/profile; no trusted user activation, native dialog automation or inactive-tab screenshot |
-| WeChat 0.5.1 | 268 fixture tests passed, 1 skipped; real stdio MCP; content-free real process/session identity probe left cursor/window unchanged | Local account binding required; current native send and uncached download remain unavailable; no UI sender ships |
-| QQ 0.2.0 | 144 fixture tests passed, 2 skipped; real stdio MCP; status probe did not start the closed client | Local personal-account history only, not bot-account or network write control |
+| WeChat 0.5.1 | 277 fixture tests passed, 1 skipped; real stdio MCP; content-free real process/session identity probe left cursor/window unchanged | Local account binding required; current native send and uncached download remain unavailable; no UI sender ships |
+| QQ 0.2.0 | 153 fixture tests passed, 2 skipped; real stdio MCP; status probe did not start the closed client | Local personal-account history only, not bot-account or network write control |
 | Feishu | Fixed operation schemas and fixture tests; installed official CLI diagnostic observed unauthenticated state without opening login | App/user authorization and service scopes remain required; no real message send was used as a test |
 | Tencent Meeting | Fixed cloud read allowlist and local-session controls; fixture tests; no recording starts during setup/status | Explicit account binding for cloud; local capture requires explicit target and authorization; models/native build prerequisites are separate |
 

@@ -31,7 +31,7 @@ RESERVE_SIZE = 80
 WAL_HEADER_SIZE = 32
 WAL_FRAME_SIZE = 24 + PAGE_SIZE
 SQLITE_HEADER = b"SQLite format 3\x00"
-_CACHE_VERSION = 1
+_CACHE_VERSION = 2
 _LOCK_GUARD = threading.Lock()
 _LOCKS: dict[str, threading.Lock] = {}
 
@@ -140,9 +140,23 @@ def _path_matches_handle(path: Path, handle_stat: dict) -> bool:
 
 def _observe_file(path: Path, head_size: int, *, required: bool = False) -> dict | None:
     try:
-        with path.open("rb") as handle:
+        # Source writers can defer timestamps while NTFS handles stay open.
+        # Use an unbuffered complete-byte observation for copy/cache freshness.
+        with path.open("rb", buffering=0) as handle:
             before = _handle_identity(handle)
-            head = handle.read(head_size)
+            head = handle.read(min(head_size, before["size"]))
+            if len(head) != min(head_size, before["size"]):
+                raise _SourceChanged(f"Source shortened while observing {path.name}")
+            content = hashlib.sha256(head)
+            remaining = before["size"] - len(head)
+            while remaining:
+                block = handle.read(min(1024 * 1024, remaining))
+                if not block:
+                    raise _SourceChanged(f"Source shortened while observing {path.name}")
+                content.update(block)
+                remaining -= len(block)
+            if handle.read(1):
+                raise _SourceChanged(f"Source grew while observing {path.name}")
             after = _handle_identity(handle)
     except FileNotFoundError:
         if required:
@@ -150,7 +164,8 @@ def _observe_file(path: Path, head_size: int, *, required: bool = False) -> dict
         return None
     if before != after or not _path_matches_handle(path, after):
         raise _SourceChanged(f"Source changed while observing {path.name}")
-    return {"stat": before, "head_sha256": hashlib.sha256(head).hexdigest()}
+    return {"stat": before, "head_sha256": hashlib.sha256(head).hexdigest(),
+            "content_sha256": content.hexdigest()}
 
 
 def _source_signature(source: Path) -> dict:
@@ -171,25 +186,26 @@ def _check_open_file(handle: BinaryIO, expected: dict | None, label: str) -> Non
 def _copy_observed_file(source: Path, destination: Path, expected: dict,
                         head_size: int) -> None:
     """Copy a bounded file while checking its original handle and path identity."""
-    with source.open("rb") as incoming, destination.open("xb") as outgoing:
+    with source.open("rb", buffering=0) as incoming, destination.open("xb") as outgoing:
         _check_open_file(incoming, expected, source.name)
-        head = incoming.read(head_size)
-        if hashlib.sha256(head).hexdigest() != expected["head_sha256"]:
-            raise _SourceChanged(f"{source.name} header changed before acquisition")
-        incoming.seek(0)
+        # The full digest also covers the header; avoid rereading from a
+        # Python-buffered handle or following a source that keeps growing.
         remaining = expected["stat"]["size"]
+        content = hashlib.sha256()
         while remaining:
             block = incoming.read(min(1024 * 1024, remaining))
             if not block:
                 raise _SourceChanged(f"{source.name} shortened during acquisition")
             outgoing.write(block)
+            content.update(block)
             remaining -= len(block)
+        if incoming.read(1):
+            raise _SourceChanged(f"{source.name} grew during acquisition")
+        if content.hexdigest() != expected["content_sha256"]:
+            raise _SourceChanged(f"{source.name} content changed during acquisition")
         _check_open_file(incoming, expected, source.name)
         if not _path_matches_handle(source, expected["stat"]):
             raise _SourceChanged(f"{source.name} was replaced during acquisition")
-        incoming.seek(0)
-        if hashlib.sha256(incoming.read(head_size)).hexdigest() != expected["head_sha256"]:
-            raise _SourceChanged(f"{source.name} header changed during acquisition")
 
 
 def _acquire(source: Path, directory: Path, signature: dict) -> tuple[Path, dict, str]:
@@ -356,10 +372,37 @@ def _quick_check(path: Path) -> None:
 
 def _file_digest(path: Path) -> str:
     digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        while block := handle.read(1024 * 1024):
+    with path.open("rb", buffering=0) as handle:
+        before = _handle_identity(handle)
+        remaining = before["size"]
+        while remaining:
+            block = handle.read(min(1024 * 1024, remaining))
+            if not block:
+                raise SnapshotError("Private snapshot shortened while hashing")
             digest.update(block)
+            remaining -= len(block)
+        if handle.read(1) or _handle_identity(handle) != before or not _path_matches_handle(path, before):
+            raise SnapshotError("Private snapshot changed while hashing")
     return digest.hexdigest()
+
+
+def _backup_copy(source: Path, destination: Path) -> None:
+    """Keep rollback backup reads finite even on filesystems without hard links."""
+    digest = hashlib.sha256()
+    with source.open("rb", buffering=0) as incoming, destination.open("wb") as outgoing:
+        before = _handle_identity(incoming)
+        remaining = before["size"]
+        while remaining:
+            block = incoming.read(min(1024 * 1024, remaining))
+            if not block:
+                raise SnapshotError("Previous snapshot shortened while backing up")
+            outgoing.write(block)
+            digest.update(block)
+            remaining -= len(block)
+        if incoming.read(1) or _handle_identity(incoming) != before or not _path_matches_handle(source, before):
+            raise SnapshotError("Previous snapshot changed while backing up")
+    if _file_digest(source) != digest.hexdigest():
+        raise SnapshotError("Previous snapshot content changed while backing up")
 
 
 def _canonical(value: dict) -> bytes:
@@ -367,7 +410,7 @@ def _canonical(value: dict) -> bytes:
 
 
 def _cache_mac(metadata: dict, key: bytes) -> str:
-    cache_key = hmac.new(key, b"wechat-agent-bridge authenticated snapshot cache v1", hashlib.sha256).digest()
+    cache_key = hmac.new(key, b"wechat-agent-bridge authenticated snapshot cache v2", hashlib.sha256).digest()
     return hmac.new(cache_key, _canonical(metadata), hashlib.sha256).hexdigest()
 
 
@@ -394,7 +437,7 @@ def _trusted_cache(destination: Path, key: bytes, signature: dict) -> dict | Non
         if _metadata_path(destination).read_bytes() != metadata_bytes:
             return None
         return _public(metadata, False)
-    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+    except (OSError, ValueError, KeyError, TypeError, AttributeError, SnapshotError):
         return None
 
 
@@ -424,9 +467,7 @@ def _publish(temporary: Path, destination: Path, metadata: dict, key: bytes) -> 
                 os.link(destination, backup)
             except OSError:
                 # Some filesystems do not support hard links.
-                with destination.open("rb") as src, backup.open("wb") as dst:
-                    while block := src.read(1024 * 1024):
-                        dst.write(block)
+                _backup_copy(destination, backup)
         os.replace(temporary, destination)
         replaced = True
         os.replace(stamp_temp, stamp)
@@ -497,7 +538,7 @@ def snapshot(source: Path, destination: Path, key: bytes) -> dict:
                         raise SnapshotError("Detached encrypted inputs changed during validation")
                 coverage.update({
                     "acquisition": "bounded_read_only_encrypted_database_and_wal_copy",
-                    "stability": "unchanged_source_identity_size_timestamps_and_headers_through_acquisition",
+                    "stability": "matching_full_content_sha256_and_identity_before_during_after_acquisition",
                     "freshness": "latest_authenticated_commit_in_acquired_files_not_at_return_time",
                     "source_changes_after_acquisition_allowed": True,
                 })

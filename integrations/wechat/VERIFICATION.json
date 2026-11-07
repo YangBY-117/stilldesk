@@ -2,7 +2,7 @@
   "date": "2026-11-07",
   "version": "0.5.1",
   "fixtureTests": {
-    "passed": 268,
+    "passed": 277,
     "skipped": 1,
     "failed": 0
   },
@@ -31,7 +31,7 @@
     },
     {
       "path": "wechat_bridge/cipher.py",
-      "sha256": "ab9641766dfff8c3654f707c0010ff32ecfb28ca4c473ef53ff1a8244739f554"
+      "sha256": "fea5dd58c1826f8134255a34d0f3277393adc742eb69621ec78439cc13b85412"
     },
     {
       "path": "wechat_bridge/cli.py",
@@ -76,5 +76,15 @@
     "passed": 9,
     "failed": 0,
     "scope": "quiet policy and real stdio protocol"
+  },
+  "consistencyRegression": {
+    "trigger": "same_length_write_with_delayed_or_colliding_metadata",
+    "newCases": 9,
+    "sourceDigest": "complete_sha256",
+    "memoryBlockBytes": 1048576,
+    "maxReadPerPass": "initial_size_plus_one",
+    "freshnessCost": "linear_source_io",
+    "crossDatabaseAtomic": false,
+    "repairedCiResult": "pending_root_rerun"
   }
 }

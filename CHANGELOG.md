@@ -16,6 +16,9 @@ First public StillDesk source release.
   files. Claude Code verification is static only.
 - Reproducible browser fixtures, native transport tests, independent sanitizer,
   capability matrix, a public website, brand assets and a test-ledger animation.
+- Source acquisition verifies bounded streaming content fingerprints, copied
+  bytes and final database/WAL identity. Same-size writes hidden by delayed file
+  metadata invalidate the cache; cached-index reads remain available explicitly.
 
 Current native WeChat writes, uncached network media retrieval, QQ personal
 account writes, native browser dialogs and trusted-user-gesture actions are not
